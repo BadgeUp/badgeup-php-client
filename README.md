@@ -13,6 +13,9 @@ var_dump($allAchievements); // prints the list of achievements
 
 ## API
 
+### `getAchievement(string $id)`
+Retrieves an achievement by ID.
+
 ### `getAchievements()`
 Retrieves an array of achievements.
 

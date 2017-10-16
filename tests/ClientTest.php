@@ -29,6 +29,42 @@ final class ClientTest extends TestCase
         $this->assertInstanceOf(GuzzleHttp\Promise\Promise::class, $bup->createEvent('test-user', 'some:key'));
     }
 
+    public function test_getAchievement_200()
+    {
+        $responseBody = '{
+            "id": "123",
+            "name": "name",
+            "description": "desc",
+            "meta": {
+                "created": "2017-10-15T23:59:29.622Z"
+            }
+        }';
+        $response200 = (new Response())
+            ->withBody(Psr7\stream_for($responseBody))
+            ->withStatus('200');
+        $mock = new MockHandler([ $response200 ]);
+
+        $stack = GuzzleHttp\HandlerStack::create($mock);
+
+        $container = [];
+        $history = GuzzleHttp\Middleware::history($container);
+        $stack->push($history);
+
+        $client = new GuzzleHttp\Client(['handler' => $stack]);
+
+        // construct the client
+        $bup = new BadgeUp\Client($this->key);
+        $bup->setTestClient($client);
+
+        $obj = json_decode($responseBody);
+        $res = $bup->getAchievement("123")->wait();
+        $this->assertEquals($obj, $res);
+
+        // check uri
+        $uri = (string) $container[0]['request']->getUri();
+        $this->assertEquals('achievements/123', $uri);
+    }
+
     public function test_getAchievements_200()
     {
         $mockBody = Psr7\stream_for('{

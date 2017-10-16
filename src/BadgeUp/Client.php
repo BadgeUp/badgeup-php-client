@@ -47,6 +47,15 @@ final class Client
     /* ACHIEVEMENTS */
 
     /**
+     * Retrieves an achievement by ID.
+     * @return Returns a promise that resolves with the results of a successful response.
+     */
+    public function getAchievement(string $id)
+    {
+        return $this->getAsync('achievements/' . $id);
+    }
+
+    /**
      * Retrieves a list of achievements.
      * @return Returns a promise that resolves with the results of a successful response.
      */
@@ -118,33 +127,33 @@ final class Client
         return $promise;
     }
 
-    private function getAsync(string $method, $query = null)
+    private function getAsync(string $uri, $query = null)
     {
-        $promise = $this->http->getAsync($method, [ "auth" => [$this->key, null], "query" => $query ])->then(function ($response) {
+        $promise = $this->http->getAsync($uri, [ "auth" => [$this->key, null], "query" => $query ])->then(function ($response) {
             return json_decode($response->getBody()->getContents());
         });
         return $promise;
     }
 
-    private function postAsync(string $method, $query, $json)
+    private function postAsync(string $uri, $query, $json)
     {
-        $promise = $this->http->postAsync($method, [ "auth" => [$this->key, null], "query" => $query, "json" => $json ])->then(function ($response) {
+        $promise = $this->http->postAsync($uri, [ "auth" => [$this->key, null], "query" => $query, "json" => $json ])->then(function ($response) {
             return json_decode($response->getBody()->getContents());
         });
         return $promise;
     }
 
-    private function patchAsync(string $method, $query, $json)
+    private function patchAsync(string $uri, $query, $json)
     {
-        $promise = $this->http->patchAsync($method, [ "auth" => [$this->key, null], "query" => $query, "json" => $json ])->then(function ($response) {
+        $promise = $this->http->patchAsync($uri, [ "auth" => [$this->key, null], "query" => $query, "json" => $json ])->then(function ($response) {
             return json_decode($response->getBody()->getContents());
         });
         return $promise;
     }
 
-    private function deleteAsync(string $method, $query)
+    private function deleteAsync(string $uri, $query)
     {
-        $promise = $this->http->deleteAsync($method, [ "auth" => [$this->key, null], "query" => $query ])->then(function ($response) {
+        $promise = $this->http->deleteAsync($uri, [ "auth" => [$this->key, null], "query" => $query ])->then(function ($response) {
             return json_decode($response->getBody()->getContents());
         });
         return $promise;
