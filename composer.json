@@ -11,6 +11,11 @@
             "email": "mark@badgeup.io"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "BadgeUp\\": "src/BadgeUp/"
+        }
+    },
     "support": {
         "email": "support@badgeup.io",
         "issues": "https://github.com/badgeup/badgeup-php-client/issues"
