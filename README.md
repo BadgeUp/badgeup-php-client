@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/BadgeUp/badgeup-php-client.svg?branch=master)](https://travis-ci.org/BadgeUp/badgeup-php-client)
 
+You may also be interested in our [WordPress plugin](https://github.com/BadgeUp/badgeup-wordpress-plugin) which uses this client.
+
 ## Example Use
 ```php
 $key = '<API Key>';
